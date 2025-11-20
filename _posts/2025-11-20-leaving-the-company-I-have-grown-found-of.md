@@ -76,13 +76,13 @@ typora-root-url: ../
 
 > 대표님의 응원
 
-![와랩_대표님의_응원](/images/2025-11-20-정들었던 회사를 떠나며/와랩_대표님의_응원.png)
+![ceo-cheerup](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/ceo-cheerup.png)
 
 > 팀원 분들의 응원
 
-![팀원분들의_응원](/images/2025-11-20-정들었던 회사를 떠나며/팀원분들의_응원.png)
+![team-cheerup](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/team-cheerup.png)
 
 > 동료분들의 응원
 
-![동료분들_메세지카드](/images/2025-11-20-정들었던 회사를 떠나며/동료분들_메세지카드.jpeg)
+![colleague-cheerup](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/colleague-cheerup.jpeg)
 
