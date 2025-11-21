@@ -20,7 +20,7 @@ title                    : "Noote's Journey"
 title_separator          : "|"
 subtitle                 : "It's okay to be wrong" # site tagline that appears below site title in masthead
 name                     : "Noote"
-description              : # ""
+description              : "데이터 분석가의 여정과 회고" # 사이트 설명 (SEO에 중요)
 url                      : "https://noote-taking.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
