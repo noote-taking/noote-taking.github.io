@@ -6,7 +6,6 @@
    Typography
    ========================================================================== */
 
-$global-font-family: 'Nanum Gothic', sans-serif;
 $doc-font-size: 16 !default;
 
 /* paragraph indention */
@@ -15,6 +14,7 @@ $indent-var: 1.3em !default;
 
 /* system typefaces */
 $serif: Georgia, Times, serif !default;
+// 브라우저는 사용할 폰트를 $sans-serif에 설정된 순서대로 시도함.
 $sans-serif: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Roboto", "Segoe UI",
   "Helvetica Neue", "Lucida Grande", Arial, sans-serif !default;
 $monospace: Monaco, Consolas, "Lucida Console", monospace !default;
