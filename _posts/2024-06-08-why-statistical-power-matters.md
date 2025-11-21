@@ -24,7 +24,7 @@ A/B 테스트는 사전에 정의된 평가지표(primary metirc)에 대해 최�
 
 ![Exaggeration ratio](/images/2024-06-08-why-statistical-power-matters/Exaggeration ratio.png)
 
-* Exaggeration ratio(과장 비율): 효과가 통계적으로 유의미하게 0이 아님으로 나타났을 경우, <br>추정된 효과 크기의 절댓값을 실제 효과 크기로 나눈 값의 평균
+* Exaggeration ratio(과장 비율): 효과가 통계적으로 유의미하게 0이 아님으로 나타났을 경우, <br>추정된 효과 크기의 절댓값을 실제 효과 크기로 나눈 값의 기댓값
 
 이와 관련해서는 Dr.Kohavi도 아래와 같이 [언급](https://www.linkedin.com/posts/ronnyk_abtesting-experimentguide-pvalue-activity-7137182337276014592-Pw3K/)한 바 있다.
 
