@@ -78,13 +78,34 @@ typora-root-url: ../
 
 ![ceo-cheerup](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/ceo-cheerup.png)
 
+- 젊고 유능했던 대표님, 많은 신뢰와 기회를 주신 덕분에 내가 조금 더 나은 사람이 될 수 있었다.
+
+
+
 > 팀원 분들의 응원
 
 ![team-cheerup](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/team-cheerup.png)
 
+- 내가 처음으로 뽑은 팀원부터, 산학 협력 프로젝트에서 이어온 인연으로 입사를 하게 된 팀원까지
+- 잘 따라와 주시고 지지해 주셔서 감사했어요.
+
+
+
 > 동료분들의 응원
 
 ![colleague-cheerup](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/colleague-cheerup.jpeg)
+
+- 내 관심사와 특징을 살려 직접 그린 그림으로 만들어 주신 이별 카드. 이런 동료, 이런 회사는 또 없지 않을까..?
+
+
+
+> 이별 선물
+
+![gift_from_colleague](/images/2025-11-20-leaving-the-company-I-have-grown-found-of/gift_from_colleague.jpeg)
+
+- 추위를 많이 타서 겨울에 사무실에서도 목도리를 하고 다니던 나를 기억해준 팀원들
+- 휴식과 체력 회복이 필요한 나에게 딱 맞는 비타민을 선물해 준 동료분
+- 누군가가 나를 기억해 주고, 마음을 표현해 준다는 것은 정말 감사한 일인 것 같다.
 
 
 
