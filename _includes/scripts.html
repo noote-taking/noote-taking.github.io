@@ -21,31 +21,9 @@
 {% include analytics.html %}
 {% include /comments-providers/scripts.html %}
 
-{% if page.use_math %}
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    extensions: ["tex2jax.js", "AMSmath.js", "AMSsymbols.js"],
-    jax: ["input/TeX", "output/HTML-CSS"],
-    TeX: {
-        equationNumbers: {
-            autoNumber: "AMS"
-        },
-        TagSide: "right",
-        TagIndent: ".8em"
-    },
-    tex2jax: {
-    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-    processEscapes: true
-    },
-    "HTML-CSS": { availableFonts: ["TeX"] }
-});
-</script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-{% endif %}
-
 {% if site.after_footer_scripts %}
   {% for script in site.after_footer_scripts %}
     <script src="{{ script | relative_url }}"></script>
   {% endfor %}
 {% endif %}
+

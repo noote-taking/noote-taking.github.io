@@ -1,0 +1,49 @@
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        TeX: {
+          equationNumbers: {
+            autoNumber: "all"
+          },
+          tagSide: "right",
+          tagIndent: ".8em"
+        },
+        showProcessingMessages: false,
+        messageStyle: "none",
+        skipStartupTypeset: false,
+        "fast-preview": {
+          disabled: true
+        },
+        tex2jax: {
+        inlineMath: [ ['$', '$'] ],
+        displayMath: [ ['$$', '$$'] ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+    MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
+          alert("Math Processing Error: "+message[1]);
+        });
+    MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
+          alert("Math Processing Error: "+message[1]);
+        });
+    </script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<style>
+/* MathJax script 태그 숨기기 */
+script[type="math/tex"],
+script[type="math/tex; mode=display"] {
+    display: none !important;
+}
+/* 수식 블록 스타일링 */
+.MathJax_Display {
+    margin: 1em 0;
+    display: block !important;
+}
+/* 수식이 렌더링되기 전 공간 확보 - script 태그가 있는 부모 요소 */
+script[type="math/tex; mode=display"] {
+    display: block !important;
+    /* min-height: 1em; */
+    visibility: hidden;
+}
+</style>
+
