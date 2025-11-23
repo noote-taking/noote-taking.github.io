@@ -35,6 +35,14 @@
     function typesetMath() {
       if (typeof MathJax !== 'undefined' && MathJax.Hub) {
         console.log("MathJax found, typesetting...");
+        console.log("MathJax config:", MathJax.Hub.config);
+        
+        // 수식이 있는지 확인
+        var mathScripts = document.querySelectorAll('script[type="math/tex"], script[type="math/tex; mode=display"]');
+        var textWithMath = document.body.innerText.match(/\$\$[\s\S]*?\$\$/g);
+        console.log("Found math scripts:", mathScripts.length);
+        console.log("Found $$ blocks in text:", textWithMath ? textWithMath.length : 0);
+        
         MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         return true;
       }
