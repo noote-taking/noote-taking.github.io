@@ -31,25 +31,50 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <script type="text/javascript">
   // GitHub Pages에서도 MathJax가 확실하게 작동하도록 보장
-  if (typeof MathJax !== 'undefined' && MathJax.Hub) {
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-  } else {
-    // MathJax가 로드될 때까지 대기
-    window.addEventListener("load", function() {
-      var retries = 0;
-      var maxRetries = 50;
-      var checkInterval = setInterval(function() {
-        retries++;
-        if (typeof MathJax !== 'undefined' && MathJax.Hub && MathJax.Hub.queue) {
-          MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-          clearInterval(checkInterval);
-        } else if (retries >= maxRetries) {
-          clearInterval(checkInterval);
-          console.error("MathJax failed to load after 10 seconds");
-        }
-      }, 200);
-    });
-  }
+  (function() {
+    function typesetMath() {
+      if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+        console.log("MathJax found, typesetting...");
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+        return true;
+      }
+      return false;
+    }
+    
+    // 즉시 시도
+    if (!typesetMath()) {
+      // DOM이 준비되면 시도
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          setTimeout(function() {
+            if (!typesetMath()) {
+              // 페이지 로드 완료 후 재시도
+              window.addEventListener("load", function() {
+                setTimeout(typesetMath, 1000);
+              });
+            }
+          }, 500);
+        });
+      } else {
+        // 이미 로드된 경우
+        window.addEventListener("load", function() {
+          setTimeout(function() {
+            if (!typesetMath()) {
+              // 최대 5초까지 재시도
+              var retries = 0;
+              var maxRetries = 25;
+              var checkInterval = setInterval(function() {
+                retries++;
+                if (typesetMath() || retries >= maxRetries) {
+                  clearInterval(checkInterval);
+                }
+              }, 200);
+            }
+          }, 1000);
+        });
+      }
+    }
+  })();
 </script>
 {% endif %}
 
