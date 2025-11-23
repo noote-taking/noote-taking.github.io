@@ -21,26 +21,52 @@
       }
     });
     </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <script type="text/javascript">
-  // GitHub Pages에서도 MathJax가 제대로 작동하도록 보장
-  window.MathJax = window.MathJax || {};
-  window.addEventListener("load", function() {
-    if (typeof MathJax !== 'undefined' && MathJax.Hub) {
-      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-    } else {
-      // MathJax가 로드될 때까지 대기
-      var checkInterval = setInterval(function() {
-        if (typeof MathJax !== 'undefined' && MathJax.Hub && MathJax.Hub.queue) {
+  // MathJax를 동적으로 로드하여 GitHub Pages에서도 확실하게 작동하도록 함
+  (function() {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://cdn.jsdelivr.net/npm/mathjax@2.7.7/MathJax.js?config=TeX-MML-AM_CHTML';
+    script.onload = function() {
+      if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+      }
+    };
+    script.onerror = function() {
+      // 첫 번째 CDN 실패 시 대체 CDN 시도
+      var fallbackScript = document.createElement('script');
+      fallbackScript.type = 'text/javascript';
+      fallbackScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML';
+      fallbackScript.onload = function() {
+        if (typeof MathJax !== 'undefined' && MathJax.Hub) {
           MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-          clearInterval(checkInterval);
         }
-      }, 100);
-      // 최대 10초 대기
-      setTimeout(function() {
-        clearInterval(checkInterval);
-      }, 10000);
-    }
+      };
+      document.head.appendChild(fallbackScript);
+    };
+    document.head.appendChild(script);
+  })();
+</script>
+<script type="text/javascript">
+  // 페이지 로드 후에도 MathJax가 작동하도록 보장
+  window.addEventListener("load", function() {
+    setTimeout(function() {
+      if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+      } else {
+        var retries = 0;
+        var maxRetries = 50;
+        var checkInterval = setInterval(function() {
+          retries++;
+          if (typeof MathJax !== 'undefined' && MathJax.Hub && MathJax.Hub.queue) {
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+            clearInterval(checkInterval);
+          } else if (retries >= maxRetries) {
+            clearInterval(checkInterval);
+          }
+        }, 200);
+      }
+    }, 500);
   });
 </script>
 <style>
