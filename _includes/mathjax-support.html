@@ -20,31 +20,26 @@
         skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
       }
     });
-    MathJax.Hub.Register.MessageHook("Math Processing Error",function (message) {
-          alert("Math Processing Error: "+message[1]);
-        });
-    MathJax.Hub.Register.MessageHook("TeX Jax - parse error",function (message) {
-          alert("Math Processing Error: "+message[1]);
-        });
     </script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 <script type="text/javascript">
-  // GitHub Pages에서도 MathJax가 제대로 로드되도록 보장
+  // GitHub Pages에서도 MathJax가 제대로 작동하도록 보장
+  window.MathJax = window.MathJax || {};
   window.addEventListener("load", function() {
     if (typeof MathJax !== 'undefined' && MathJax.Hub) {
       MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
     } else {
-      // MathJax가 아직 로드되지 않았다면 재시도
-      var checkMathJax = setInterval(function() {
-        if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+      // MathJax가 로드될 때까지 대기
+      var checkInterval = setInterval(function() {
+        if (typeof MathJax !== 'undefined' && MathJax.Hub && MathJax.Hub.queue) {
           MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
-          clearInterval(checkMathJax);
+          clearInterval(checkInterval);
         }
       }, 100);
-      // 최대 5초 대기
+      // 최대 10초 대기
       setTimeout(function() {
-        clearInterval(checkMathJax);
-      }, 5000);
+        clearInterval(checkInterval);
+      }, 10000);
     }
   });
 </script>
