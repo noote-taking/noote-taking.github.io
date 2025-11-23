@@ -20,13 +20,15 @@ A/B 테스트는 사전에 정의된 평가지표(primary metirc)에 대해 최�
 
 하지만, 왜 충분한 수준의 검정력(Power)을 확보해야 하는 것일까? <br>일차적인 이유는 검정력의 정의에서 알수 있다. 검정력은 '각 변형 간에 의미 있는 차이가 있을때 이를 감지할 확률로' 정의되는데 <br>이는 검정력이 낮은 상태에서 통계적으로 유의미한 결과를 얻을 경우, 우연에 의한 결과일 확률이 높아지기 때문이다. <br>(또는 Power = $1 - \beta\$ 라는 관점에서, '2종 오류'를 줄이기 위해서라는 이해도 가능하다)
 
-그렇다면 또 다른 이유는 무엇일까? 그건 바로 효과의 과대 추정을 방지하기 위함이다. <br>아래의 그래프는 검정력의 크기에 따른 과장 비율을 도식한 그래프로 (Gelman & Carlin, 2014) <br>검정력 80%에서 13%의 과장, 50%에서 40%의 과장, 10% 이하 에서는 약 400% 이상의 과장이 발생하는 것을 알 수 있다.
+그렇다면 또 다른 이유는 무엇일까? 그건 바로 효과의 과대 추정을 방지하기 위함이다. <br>아래의 그래프는 검정력의 크기에 따른 과장 비율을 도식한 그래프로 (Gelman & Carlin, 2014) <br>업계 표준인 검정력 80%에서도 약 13%의 과장이 발생하고, 50%에서는 40%의 과장, 10% 이하에서는 약 400% 이상의 과장이 발생하는 것을 알 수 있다.
 
 ![Exaggeration ratio](/images/2024-06-08-why-statistical-power-matters/Exaggeration ratio.png)
 
 * Exaggeration ratio(과장 비율): 효과가 통계적으로 유의미하게 0이 아님으로 나타났을 경우, <br>추정된 효과 크기의 절댓값을 실제 효과 크기로 나눈 값의 기댓값
 
-이와 관련해서는 Dr.Kohavi도 아래와 같이 [언급](https://www.linkedin.com/posts/ronnyk_abtesting-experimentguide-pvalue-activity-7137182337276014592-Pw3K/)한 바 있다.
+
+
+이와 관련해서는 Ron 박사님 역시 다음과 같이 [언급](https://www.linkedin.com/posts/ronnyk_abtesting-experimentguide-pvalue-activity-7137182337276014592-Pw3K/)한 바 있다.
 
 > At 80% power, which is the industry standard power for a well-run experiment, the exaggeration factor is 13%. This may not seem like much, but when you add up successful experiments from the last year and tell finance that they added up to 15% improvement to conversion or revenue, make sure to apply at least this haircut and report 13%.  I wrote “at least” because due to multiple-hypothesis testing (we often run A/B/C/D tests) and other human degrees of freedom, <u>I would haircut at least 20%, the number we used at Bing.</u> 
 
