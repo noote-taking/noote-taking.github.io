@@ -1,36 +1,20 @@
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        TeX: {
-          equationNumbers: {
-            autoNumber: "all"
-          },
-          tagSide: "right",
-          tagIndent: ".8em"
-        },
-        showProcessingMessages: false,
-        messageStyle: "none",
-        skipStartupTypeset: false,
-        "fast-preview": {
-          disabled: true
-        },
-        tex2jax: {
-          inlineMath: [ ['$', '$'] ],
-          displayMath: [ ['$$', '$$'] ],
-          processEscapes: true,
-          skipTags: ['noscript', 'style', 'textarea', 'pre', 'code']
-        }
-    });
-    </script>
-<script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<style>
-/* 수식 블록 스타일링 */
-.MathJax_Display {
-    margin: 1em 0;
-    display: block !important;
-}
-</style>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      tags: 'ams'
+    },
+    options: {
+      skipHtmlTags: ['script', 'style', 'textarea', 'pre', 'code']
+    }
+  };
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script type="text/javascript">
-  // script type="math/tex" 태그를 일반 텍스트로 변환 (MathJax 로드 전에 실행)
+  // script type="math/tex" 태그를 일반 텍스트로 변환 (MathJax 3.x가 처리하도록)
   (function() {
     var converted = false;
     
@@ -52,19 +36,44 @@
         var scriptType = script.getAttribute('type') || '';
         var isDisplay = scriptType.indexOf('mode=display') !== -1;
         
-        // 스크립트 태그를 텍스트 노드로 교체
-        var textNode = document.createTextNode(isDisplay ? '$$' + mathText + '$$' : '$' + mathText + '$');
-        script.parentNode.replaceChild(textNode, script);
+        // 스크립트 태그를 span 요소로 교체
+        var span = document.createElement('span');
+        span.textContent = isDisplay ? '$$' + mathText + '$$' : '$' + mathText + '$';
+        script.parentNode.replaceChild(span, script);
       });
       
       converted = true;
+      
+      // MathJax 3.x가 로드되어 있으면 재처리
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+      }
     }
     
-    // DOM이 준비되면 즉시 변환 (MathJax 로드 전)
+    // MathJax 3.x가 로드된 후 변환
+    function initConversion() {
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        // MathJax가 이미 로드되어 있으면 즉시 변환
+        convertMathScripts();
+        window.MathJax.typesetPromise();
+      } else {
+        // MathJax가 로드될 때까지 대기
+        window.addEventListener("load", function() {
+          setTimeout(function() {
+            convertMathScripts();
+            if (window.MathJax && window.MathJax.typesetPromise) {
+              window.MathJax.typesetPromise();
+            }
+          }, 100);
+        });
+      }
+    }
+    
+    // DOM이 준비되면 초기화
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', convertMathScripts);
+      document.addEventListener('DOMContentLoaded', initConversion);
     } else {
-      convertMathScripts();
+      initConversion();
     }
   })();
 </script>
