@@ -37,20 +37,38 @@
         console.log("MathJax found, typesetting...");
         console.log("MathJax config:", MathJax.Hub.config);
         
-        // 수식이 있는지 확인
-        var mathScripts = document.querySelectorAll('script[type="math/tex"], script[type="math/tex; mode=display"]');
-        var textWithMath = document.body.innerText.match(/\$\$[\s\S]*?\$\$/g);
-        console.log("Found math scripts:", mathScripts.length);
-        console.log("Found $$ blocks in text:", textWithMath ? textWithMath.length : 0);
+        // 수식이 있는지 확인 - 모든 가능한 형식 확인
+        var allScripts = document.querySelectorAll('script');
+        var mathScripts = [];
+        allScripts.forEach(function(script) {
+          var type = script.getAttribute('type');
+          if (type && (type.indexOf('math/tex') !== -1 || type.indexOf('mathjax') !== -1)) {
+            mathScripts.push(script);
+          }
+        });
         
-        // script 태그의 실제 type 속성 확인
+        console.log("Total scripts:", allScripts.length);
+        console.log("Found math scripts:", mathScripts.length);
+        
         if (mathScripts.length > 0) {
           console.log("First math script type:", mathScripts[0].getAttribute('type'));
-          console.log("First math script content:", mathScripts[0].textContent.substring(0, 50));
+          console.log("First math script content:", mathScripts[0].textContent.substring(0, 100));
+          console.log("First math script parent:", mathScripts[0].parentElement.tagName);
         }
         
         // MathJax 설정 확인
         console.log("MathJax skipTags:", MathJax.Hub.config.tex2jax.skipTags);
+        console.log("MathJax displayMath:", MathJax.Hub.config.tex2jax.displayMath);
+        
+        // 모든 script 태그의 type 확인
+        var scriptTypes = [];
+        allScripts.forEach(function(script) {
+          var type = script.getAttribute('type');
+          if (type && type.indexOf('math') !== -1) {
+            scriptTypes.push(type);
+          }
+        });
+        console.log("All math-related script types:", scriptTypes);
         
         MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         return true;
