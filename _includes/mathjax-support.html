@@ -22,21 +22,38 @@
     });
     </script>
 <style>
-/* MathJax script 태그 숨기기 */
-script[type="math/tex"],
-script[type="math/tex; mode=display"] {
-    display: none !important;
-}
 /* 수식 블록 스타일링 */
 .MathJax_Display {
     margin: 1em 0;
     display: block !important;
 }
-/* 수식이 렌더링되기 전 공간 확보 - script 태그가 있는 부모 요소 */
-script[type="math/tex; mode=display"] {
-    display: block !important;
-    /* min-height: 1em; */
-    visibility: hidden;
-}
 </style>
+<script type="text/javascript">
+  // MathJax가 수식을 처리한 후에만 script 태그 숨기기
+  (function() {
+    function hideMathScripts() {
+      var mathScripts = document.querySelectorAll('script[type="math/tex"], script[type="math/tex; mode=display"]');
+      mathScripts.forEach(function(script) {
+        script.style.display = 'none';
+      });
+    }
+    
+    // MathJax가 처리한 후 숨기기
+    if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+      MathJax.Hub.Register.StartupHook("End", function() {
+        setTimeout(hideMathScripts, 100);
+      });
+    } else {
+      window.addEventListener("load", function() {
+        setTimeout(function() {
+          if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+            MathJax.Hub.Register.StartupHook("End", function() {
+              setTimeout(hideMathScripts, 100);
+            });
+          }
+        }, 1000);
+      });
+    }
+  })();
+</script>
 
