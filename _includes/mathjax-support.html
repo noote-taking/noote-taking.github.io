@@ -17,8 +17,13 @@
         inlineMath: [ ['$', '$'] ],
         displayMath: [ ['$$', '$$'] ],
         processEscapes: true,
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        skipTags: ['noscript', 'style', 'textarea', 'pre', 'code']
       }
+    });
+    // MathJax가 완전히 준비된 후 수식 처리
+    MathJax.Hub.Register.StartupHook("End", function () {
+      console.log("MathJax StartupHook End - processing math");
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
     });
     </script>
 <style>
