@@ -14,16 +14,11 @@
           disabled: true
         },
         tex2jax: {
-        inlineMath: [ ['$', '$'] ],
-        displayMath: [ ['$$', '$$'] ],
-        processEscapes: true,
-        skipTags: ['noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-    // MathJax가 완전히 준비된 후 수식 처리
-    MathJax.Hub.Register.StartupHook("End", function () {
-      console.log("MathJax StartupHook End - processing math");
-      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+          inlineMath: [ ['$', '$'] ],
+          displayMath: [ ['$$', '$$'] ],
+          processEscapes: true,
+          skipTags: ['noscript', 'style', 'textarea', 'pre', 'code']
+        }
     });
     </script>
 <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -35,30 +30,75 @@
 }
 </style>
 <script type="text/javascript">
-  // MathJax가 수식을 처리한 후에만 script 태그 숨기기
+  // script type="math/tex" 태그를 일반 텍스트로 변환하여 MathJax가 처리하도록 함
   (function() {
-    function hideMathScripts() {
+    var converted = false; // 중복 변환 방지 플래그
+    
+    function convertMathScripts() {
+      // 이미 변환되었으면 중단
+      if (converted) return;
+      
       var mathScripts = document.querySelectorAll('script[type="math/tex"], script[type="math/tex; mode=display"]');
+      if (mathScripts.length === 0) return;
+      
+      console.log("Converting " + mathScripts.length + " math scripts to text");
+      
       mathScripts.forEach(function(script) {
-        script.style.display = 'none';
+        var mathText = script.textContent || script.innerText;
+        var scriptType = script.getAttribute('type') || '';
+        
+        // display 모드 감지: type에 "mode=display"가 포함되어 있거나, 
+        // 부모가 p 태그이고 형제 요소가 없거나, 수식이 여러 줄인 경우
+        var isDisplay = scriptType.indexOf('mode=display') !== -1 ||
+                        (script.parentElement && 
+                         script.parentElement.tagName === 'P' && 
+                         script.parentElement.children.length === 1 &&
+                         mathText.indexOf('\\n') !== -1);
+        
+        // 스크립트 태그를 span으로 교체
+        var span = document.createElement('span');
+        span.className = 'math';
+        span.textContent = isDisplay ? '$$' + mathText + '$$' : '$' + mathText + '$';
+        
+        // 스크립트 태그를 span으로 교체
+        script.parentNode.replaceChild(span, script);
       });
+      
+      converted = true; // 변환 완료 표시
+      
+      // 변환 후 MathJax가 처리하도록 함 (한 번만)
+      if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+      }
     }
     
-    // MathJax가 처리한 후 숨기기
-    if (typeof MathJax !== 'undefined' && MathJax.Hub) {
-      MathJax.Hub.Register.StartupHook("End", function() {
-        setTimeout(hideMathScripts, 100);
-      });
+    // MathJax가 로드된 후 한 번만 변환
+    function initMathConversion() {
+      if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+        MathJax.Hub.Register.StartupHook("End", function() {
+          convertMathScripts();
+        });
+      } else {
+        window.addEventListener("load", function() {
+          setTimeout(function() {
+            if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+              MathJax.Hub.Register.StartupHook("End", function() {
+                convertMathScripts();
+              });
+            } else {
+              // MathJax가 로드되지 않았으면 직접 변환 시도
+              convertMathScripts();
+            }
+          }, 500);
+        });
+      }
+    }
+    
+    // DOM이 준비되면 초기화
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initMathConversion);
     } else {
-      window.addEventListener("load", function() {
-        setTimeout(function() {
-          if (typeof MathJax !== 'undefined' && MathJax.Hub) {
-            MathJax.Hub.Register.StartupHook("End", function() {
-              setTimeout(hideMathScripts, 100);
-            });
-          }
-        }, 1000);
-      });
+      initMathConversion();
     }
   })();
 </script>
