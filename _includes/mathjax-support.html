@@ -27,7 +27,27 @@
           alert("Math Processing Error: "+message[1]);
         });
     </script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript">
+  // GitHub Pages에서도 MathJax가 제대로 로드되도록 보장
+  window.addEventListener("load", function() {
+    if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    } else {
+      // MathJax가 아직 로드되지 않았다면 재시도
+      var checkMathJax = setInterval(function() {
+        if (typeof MathJax !== 'undefined' && MathJax.Hub) {
+          MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+          clearInterval(checkMathJax);
+        }
+      }, 100);
+      // 최대 5초 대기
+      setTimeout(function() {
+        clearInterval(checkMathJax);
+      }, 5000);
+    }
+  });
+</script>
 <style>
 /* MathJax script 태그 숨기기 */
 script[type="math/tex"],
