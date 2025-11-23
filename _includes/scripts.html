@@ -43,6 +43,15 @@
         console.log("Found math scripts:", mathScripts.length);
         console.log("Found $$ blocks in text:", textWithMath ? textWithMath.length : 0);
         
+        // script 태그의 실제 type 속성 확인
+        if (mathScripts.length > 0) {
+          console.log("First math script type:", mathScripts[0].getAttribute('type'));
+          console.log("First math script content:", mathScripts[0].textContent.substring(0, 50));
+        }
+        
+        // MathJax 설정 확인
+        console.log("MathJax skipTags:", MathJax.Hub.config.tex2jax.skipTags);
+        
         MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         return true;
       }
